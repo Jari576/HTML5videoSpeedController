@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+
+    "name": "HTML5 video speed controller",
+    "description": "see name",
+    "version": "1.0",
+    "browser_action": {
+        "default_icon": "img.png",
+        "default_popup": "speedControllerPopup.html"
+    },
+    "options_ui": {
+        "page": "options.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*"],
+            "js": ["pageload.js"]
+        }
+    ],
+    "permissions": ["activeTab", "storage"],
+    "icons": {
+        "128": "img.png"
+    }
+}
