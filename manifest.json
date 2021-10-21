@@ -1,10 +1,12 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
 
     "name": "HTML5 video speed controller",
-    "description": "see name",
+    "description": "Simple, no-nonsense speed controller for html-5 video in chromium browsers",
     "version": "1.0",
-    "browser_action": {
+    "icons": { "128": "img.png" },
+    "author": "jari", 
+    "action": {
         "default_icon": "img.png",
         "default_popup": "speedControllerPopup.html"
     },
@@ -13,12 +15,9 @@
     },
     "content_scripts": [
         {
-            "matches": ["*"],
+            "matches": ["*://*/*"],
             "js": ["pageload.js"]
         }
     ],
-    "permissions": ["activeTab", "storage"],
-    "icons": {
-        "128": "img.png"
-    }
+    "permissions": ["activeTab", "storage", "scripting"]
 }

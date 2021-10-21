@@ -1,3 +1,5 @@
+
+// on page loaded 
 document.addEventListener("DOMContentLoaded", function () {
     // Get selected speed element
     let slider = document.getElementById("selectedSpeed");
@@ -15,26 +17,41 @@ document.addEventListener("DOMContentLoaded", function () {
             slider.max = response.maxSpeed;
             slider.step = response.sliderInterval;
             slider.value = response.speed;
-            exec(response.speed);
+            changeSpeed(response.speed);
         }
     );
 
     slider.addEventListener("input", event => {
         let sliderValue = slider.value ?? 1;
-        chrome.storage.local.get({ speed: 1 }, result => {
-            if (sliderValue !== result.speed) exec(sliderValue);
-        });
+        chrome.storage.local.set({speed: sliderValue})
     });
+
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+        if (namespace == "local" && changes.speed?.newValue) {
+            changeSpeed(changes.speed.newValue);
+        }
+        
+    })
 });
 
-function exec(speed) {
-    chrome.storage.local.set({ speed: speed });
-    chrome.tabs.executeScript(
-        {
-            // code: `console.log(${speed});`,
-            code: `[...document.getElementsByTagNameNS("http://www.w3.org/1999/xhtml", "video")].forEach(video => video.playbackRate = ${speed});`,
-        },
-        () => chrome.runtime.lastError
-    );
+function changeSpeed(speed) {
+    chrome.tabs.query({}, (tabs) => tabs.forEach( tab => {
+        chrome.scripting.executeScript(
+            {
+                target: {
+                    tabId: tab.id,
+                    allFrames: true
+                },
+                func: setSpeed,
+                args: [speed]
+            },
+            () => chrome.runtime.lastError
+        );
+    }));
     document.getElementById("currentSpeed").innerHTML = speed;
+    
+}
+
+function setSpeed(speed){
+    [...document.getElementsByTagNameNS("http://www.w3.org/1999/xhtml", "video")].forEach(video => video.playbackRate = speed);
 }
