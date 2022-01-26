@@ -1,9 +1,11 @@
 function save_options() {
+    let defaultSpeed = document.getElementById("default");
     let minSpeed = document.getElementById("min");
     let maxSpeed = document.getElementById("max");
     let sliderInterval = document.getElementById("sInterval");
     chrome.storage.local.set(
         {
+            defaultSpeed: defaultSpeed.value,
             minSpeed: minSpeed.value,
             maxSpeed: maxSpeed.value,
             sliderInterval: sliderInterval.value,
@@ -21,11 +23,13 @@ function save_options() {
 function restore_options() {
     chrome.storage.local.get(
         {
-            minSpeed: 0.1,
+            defaultSpeed: 2,
+            minSpeed: 1,
             maxSpeed: 3,
-            sliderInterval: 0.1,
+            sliderInterval: 0.5,
         },
         function (items) {
+            document.getElementById("default").value = items.defaultSpeed;
             document.getElementById("min").value = items.minSpeed;
             document.getElementById("max").value = items.maxSpeed;
             document.getElementById("sInterval").value = items.sliderInterval;
