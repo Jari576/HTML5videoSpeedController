@@ -5,19 +5,23 @@
     "description": "Simple, no-nonsense speed controller for html-5 video in chromium browsers",
     "version": "1.0",
     "icons": { "128": "img.png" },
-    "author": "jari", 
+    "author": "jari",
     "action": {
         "default_icon": "img.png",
         "default_popup": "speedControllerPopup.html"
     },
-    "options_ui": {
-        "page": "options.html"
+    "background": {
+        "service_worker": "background.js"
     },
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["pageload.js"]
+            "js": ["content.js"]
         }
     ],
-    "permissions": ["activeTab", "storage", "scripting"]
+    "host_permissions": ["http://*/", "https://*/"],
+    "options_ui": {
+        "page": "options.html"
+    },
+    "permissions": ["tabs", "activeTab", "storage", "scripting"]
 }
