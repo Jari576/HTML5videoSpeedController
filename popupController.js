@@ -32,18 +32,5 @@ document.addEventListener("DOMContentLoaded", function() {
             chrome.storage.local.set({ [`tabSpeed:${currentTab.id}`]: sliderValue })
         });
     });
-
-    chrome.storage.onChanged.addListener((changes, areaName) => {
-        if (areaName == "local") {
-            chrome.tabs.query({}, (tabs) => {
-                tabs.forEach(tab => {
-                    if (tabSpeed = changes[`tabSpeed:${tab.id}`]) {
-                        console.log(`Storage change. tab: ${tab.id}, speed: ${tabSpeed.newValue}`);
-                        changeSpeed(tabSpeed.newValue, tab);
-                    }
-                });
-            })
-        }
-    });
 });
 
