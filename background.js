@@ -5,11 +5,11 @@ chrome.runtime.onInstalled.addListener(() => {
         maxSpeed: 2,
         sliderInterval: 0.1,
     });
-
-    chrome.action.setBadgeBackgroundColor({
-        color: [0, 0, 0, 255],
-    })
 });
+
+chrome.action.setBadgeBackgroundColor({
+    color: [0, 0, 0, 255],
+})
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request === 'getTabId') sendResponse({ tabId: sender.tab.id });
