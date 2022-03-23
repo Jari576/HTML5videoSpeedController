@@ -23,10 +23,10 @@ function save_options() {
 function restore_options() {
     chrome.storage.local.get(
         {
-            defaultSpeed: 2,
+            defaultSpeed: 1,
             minSpeed: 1,
-            maxSpeed: 3,
-            sliderInterval: 0.5,
+            maxSpeed: 2,
+            sliderInterval: 0.1,
         },
         function (items) {
             document.getElementById("default").value = items.defaultSpeed;
