@@ -23,5 +23,5 @@
     "options_ui": {
         "page": "options.html"
     },
-    "permissions": ["tabs", "activeTab", "storage", "scripting"]
+    "permissions": ["tabs", "storage", "scripting"]
 }
